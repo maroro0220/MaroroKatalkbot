@@ -123,9 +123,58 @@ $bundle install
 만약 에러나면
 $sudo apt-get install libpq-dev
 $gem install heroku
+$heroku login
 ```
 
+heroku email이랑 pw치고 로그인
 
+```console
+$git init
+$git add .
+$git commit -m "maroro katalk bot"
+$heroku create marorobot
+$git push heroku master
+```
+
+완료되면 https://marorokabot.herokuapp.com/ 이런 서버 주소가 나오는데
+
+들어가보기. 그냥 들어가면 index가 없어서 에러나니깐 
+
+https://marorokabot.herokuapp.com/ keyboard 해서 들어가보기
+
+그리고
+
+플러스친구 관리자센터에서
+
+스마트채팅- api형에서
+
+앱등록
+
+앱URL에 https://marorokabot.herokuapp.com/  입력하고 API테스트 
+
+그리고 시작하기
+
+---
+
+#### 응답
+
+```ruby
+#kakaocontroller에 message에 추가 
+if user_message == '메뉴'
+    menus =["20", "대독장", "부대찌개", "순남", "버거킹"]
+    user_message = menus.sample
+elsif user_message =='로또'
+    lotto=(1..45).to_a.sample(6)
+    user_message=lotto
+else 
+  user_message="Nop. '메뉴' or '로또'"
+end
+```
+```console
+$git add .
+$git commit -m "menu function add"
+$git push heroku master
+```
 
 
 
