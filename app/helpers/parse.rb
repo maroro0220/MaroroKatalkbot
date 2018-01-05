@@ -70,3 +70,4 @@ module Parse
       return [bot_message, img_url] #없어도 됨. 자동으로 해줌
     end
   end
+end
