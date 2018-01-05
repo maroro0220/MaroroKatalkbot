@@ -52,11 +52,12 @@ module Parse
             k=k+1
           end
           movie = movie + time_list[i].to_s  + " - " + movie_list[i].to_s
-          if time_list[i].to_s[0]!="2" && k<4
-            movie=movie+"\n"
-          end
+
           if time_list[i].to_s[0]=="2" && k==2
             movie=movie+"\n"+"\n"
+          end
+          if time_list[i].to_s[0]!="2" && k<4
+            movie=movie+"\n"
           end
         end
         bot_message = movie
