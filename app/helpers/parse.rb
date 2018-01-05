@@ -52,7 +52,7 @@ module Parse
             k=k+1
           end
           movie = movie + time_list[i].to_s  + " - " + movie_list[i].to_s+"\n"
-          if time_list[i].to_s[0]=="2"&& k==2
+          if time_list[i].to_s[0]=="2"&& k==1
             movie=movie+"\n"
           end
         end
