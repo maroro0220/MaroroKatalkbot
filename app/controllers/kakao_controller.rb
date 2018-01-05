@@ -24,7 +24,7 @@ class KakaoController < ApplicationController
         :text => user_message
       },# message: {}
       :keyboard => {
-        :type => "hi!!!"
+        :type => "text"
       } #keyboard: {}
     }
     render json: return_message
