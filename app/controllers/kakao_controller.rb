@@ -9,26 +9,48 @@ class KakaoController < ApplicationController
   end
 
   def message
+    image = false
     user_message = params[:content]
     if user_message == '메뉴'
         menus =["20", "대독장", "부대찌개", "순남", "버거킹"]
-        user_message = menus.sample
+        bot_message = menus.sample
     elsif user_message =='로또'
         lotto=(1..45).to_a.sample(6).to_s
-        user_message=lotto
-      elsif user_message == '박민정'
-        user_message="♡♥♡♥♡♥♡♥"
+        bot_message=lotto
+    elsif user_message == '박민정'
+        bot_message="♡♥♡♥♡♥♡♥"
+    elsif user_message =='냥이' || user_message=='고양이'
+      bot_message="나만 고양이 없어"
+      url = "http://thecatapi.com/api/images/get?format=xml&type=jpg"
+      cat_xml = RestClient.get(url)
+      doc = Nokogiri::XML(cat_xml)
+      cat_url = doc.xpath("//url").text#url에 접근해서 안에 있는 text만 가져옴
+      image = true
     else
-        user_message="Nop. '메뉴' or '로또'"
+        bot_message="Nop. '메뉴' or '로또'"
     end
     return_message = {
       :message => {
-        :text => user_message
+        :text => bot_message
       },# message: {}
       :keyboard => {
         :type => "text"
       } #keyboard: {}
     }
-    render json: return_message
+    return_message_with_img = {
+      :message => {:text => bot_message,
+                    :photo => {
+                      :url => cat_url,
+                      :width =>640,
+                      :height => 480
+                      }
+                    },
+      :keyboard => {type: "text"}
+    }
+    if image
+      render json: return_message_with_img
+    else
+      render json: return_message
+    end
   end
 end
