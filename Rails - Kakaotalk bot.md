@@ -178,7 +178,70 @@ $git commit -m "menu function add"
 $git push heroku master
 ```
 
+---
 
+#### message
+
+```ruby
+
+```
+
+
+
+catapi 검색해서 찾기 (고양이 사진 뽑아주는 사이트)
+
+view documentation - example -h ttp://thecatapi.com/api/images/get?format=xml&results_per_page=20
+
+result_per_page=20 빼면 20장 말고 1장만
+
+```ruby
+#kakao_controller.rb
+elsif user_message =='냥이'
+      url = "http://thecatapi.com/api/images/get?format=xml&type=jpg"
+
+```
+
+```ruby
+gem 'rest-client'
+gem 'nokogiri'
+```
+
+추가하기
+
+```console
+$ bundle install
+```
+
+```ruby
+  elsif user_message =='냥이' || user_message=='고양이'|| user_message=='ㄱㅇㅇ'
+      bot_message="나만 고양이 없어"
+      url = "http://thecatapi.com/api/images/get?format=xml&type=jpg"
+      cat_xml = RestClient.get(url)
+      doc = Nokogiri::XML(cat_xml)
+      cat_url = doc.xpath("//url").text#url에 접근해서 안에 있는 text만 가져옴
+      image = true
+end
+```
+
+```ruby
+  return_message_with_img = {
+      :message => {:text => bot_message,
+                    :photo => {
+                      :url => cat_url,
+                      :width =>640,
+                      :height => 480
+                      }
+                    },
+      :keyboard => {type: "text"}
+    }
+    if image
+      render json: return_message_with_img
+    else
+      render json: return_message
+    end
+```
+
+위에도 다 채팅에 보여주는 메시지는 bot_message로 바꿈
 
 ---
 
