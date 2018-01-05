@@ -14,7 +14,7 @@ class KakaoController < ApplicationController
         menus =["20", "대독장", "부대찌개", "순남", "버거킹"]
         user_message = menus.sample
     elsif user_message =='로또'
-        lotto=(1..45).to_a.sample(6)
+        lotto=(1..45).to_a.sample(6).to_s
         user_message=lotto
     else
         user_message="Nop. '메뉴' or '로또'"
