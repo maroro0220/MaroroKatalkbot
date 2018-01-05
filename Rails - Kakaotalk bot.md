@@ -304,7 +304,7 @@ elsif user_message =='냥이' || user_message=='고양이'|| user_message=='ㄱ�
       bot_message = parser.cat[0]
       img_url = parser.cat[1]
       # parser.cat=[bot_message, img_url]
-    elsif user_message =='영화'
+elsif user_message =='영화'
       image=true
       parser=Parse::Movie.new
       movie=parser.naver
