@@ -55,7 +55,7 @@ module Parse
           if time_list[i].to_s[0]!="2" && k<4
             movie=movie+"\n"
           end
-          if time_list[i].to_s[0]=="2" && k==1
+          if time_list[i].to_s[0]=="2" && k==2
             movie=movie+"\n"+"\n"
           end
         end
