@@ -51,10 +51,11 @@ module Parse
             movie=movie+k.to_s+"관"+"\n"
             k=k+1
           end
-          movie = movie + time_list[i].to_s  + " - " + movie_list[i].to_s+"\n"
-          if time_list[i].to_s[0]=="2"&& k<2
+          if time_list[i].to_s[0]=="2" && k<2
             movie=movie+"\n"
           end
+          movie = movie + time_list[i].to_s  + " - " + movie_list[i].to_s+"\n"
+
         end
         bot_message = movie
         return bot_message
