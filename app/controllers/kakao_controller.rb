@@ -35,28 +35,9 @@ class KakaoController < ApplicationController
       img_url = movie[1]
       # bot_message = sample_movie +" - "+ movie_hash[sample_movie]
     elsif user_message =='모모'
-      url = "http://www.arthousemomo.co.kr"
-      movie_html = RestClient.get(url)
-      doc = Nokogiri::HTML(movie_html)
-      movie_list=Array.new
-      time_list=Array.new
-      movie =""
-      movie_hash=Hash.new
-
-      i=0
-      doc.css('div.time-box ul li').each do |m|
-        if i%2==0
-          time_list << m.text
-        else
-          movie_list << m.css('a').text
-        end
-        i=i+1
-      end
-
-      for i in (0..time_list.length-1)
-        movie = movie + time_list[i].to_s  + " - " + movie_list[i].to_s+"\n"
-      end
-      bot_message = movie
+      parser=Parse::Movie.new
+      movie=parser.momo
+      bot_message=movie
     else
         bot_message="Nop. '메뉴' or '로또' or 'ㄱㅇㅇ'"
     end

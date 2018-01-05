@@ -25,6 +25,39 @@ module Parse
         img_url = movie_hash[sample_movie][:url]
         return [bot_message, img_url]
       end
+
+      def momo
+        url = "http://www.arthousemomo.co.kr"
+        movie_html = RestClient.get(url)
+        doc = Nokogiri::HTML(movie_html)
+        movie_list=Array.new
+        time_list=Array.new
+        movie =""
+        movie_hash=Hash.new
+
+        i=0
+        doc.css('div.time-box ul li').each do |m|
+          if i%2==0
+            time_list << m.text
+          else
+            movie_list << m.css('a').text
+          end
+          i=i+1
+        end
+        k=1
+        for i in (0..time_list.length-1)
+          if time_list[i].to_s[0]=="1" && time_list[i].to_s[1]=="0"&&k<3
+            movie=movie+k.to_s+"관"+"\n"
+            k=k+1
+          end
+          movie = movie + time_list[i].to_s  + " - " + movie_list[i].to_s+"\n"
+          if time_list[i].to_s[0]=="2"
+            movie=movie+"\n"
+          end
+        end
+        bot_message = movie
+        return bot_message
+      end
   end
 
   class Animal
@@ -37,4 +70,3 @@ module Parse
       return [bot_message, img_url] #없어도 됨. 자동으로 해줌
     end
   end
-end
