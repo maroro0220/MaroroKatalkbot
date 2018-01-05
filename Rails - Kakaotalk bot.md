@@ -150,9 +150,11 @@ https://marorokabot.herokuapp.com/ keyboard 해서 들어가보기
 
 앱등록
 
-앱URL에 https://marorokabot.herokuapp.com/  입력하고 API테스트 
+앱URL에 https://marorokabot.herokuapp.com 입력하고 API테스트(마지막에 / 빼기)
 
-그리고 시작하기
+그리고 시작하기 누르기
+
+관리에서 공개설정 on으로 하기
 
 ---
 

@@ -16,6 +16,8 @@ class KakaoController < ApplicationController
     elsif user_message =='로또'
         lotto=(1..45).to_a.sample(6).to_s
         user_message=lotto
+      elsif user_message == '박민정'
+        user_message="♡♥♡♥♡♥♡♥"
     else
         user_message="Nop. '메뉴' or '로또'"
     end
