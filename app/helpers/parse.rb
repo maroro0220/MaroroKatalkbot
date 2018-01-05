@@ -32,10 +32,11 @@ module Parse
         doc = Nokogiri::HTML(movie_html)
         movie_list=Array.new
         time_list=Array.new
-        movie =""
+
         movie_hash=Hash.new
 
         i=0
+        movie=doc.css('div.widget.article-list-14 h5').text+"\n"+"\n"
         doc.css('div.time-box ul li').each do |m|
           if i%2==0
             time_list << m.text
