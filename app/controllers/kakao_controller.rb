@@ -24,9 +24,10 @@ class KakaoController < ApplicationController
       url = "http://thecatapi.com/api/images/get?format=xml&type=jpg"
       cat_xml = RestClient.get(url)
       doc = Nokogiri::XML(cat_xml)
-      cat_url = doc.xpath("//url").text#url에 접근해서 안에 있는 text만 가져옴
+      img_url = doc.xpath("//url").text#url에 접근해서 안에 있는 text만 가져옴
       image = true
     elsif user_message =='영화'
+      image=true
       url = "http://movie.naver.com/movie/running/current.nhn?view=list&tab=normal&order=reserve"
       movie_html = RestClient.get(url)
       doc = Nokogiri::HTML(movie_html)
@@ -40,29 +41,31 @@ class KakaoController < ApplicationController
         # movie_rate << movie.css('dd.star dl.info_star dd div.star_t1 a span.num')
         # movie_hash [ movie.css('dt a').text] = movie.css('dl.info_star span.num')
         movie_hash[movie_title] = {
-          :star => movie.css('dl.info_star span.num').text
+          :star => movie.css('dl.info_star span.num').text,
+          :url => movie.css('div.thumb img').attribute('src').to_s
         }
         # movie.css('dd.star dl.info_star dd div.star_t1 a span.num').text
         #<<는 movie_list배열에 하나씩 넣는다
       end
       sample_movie = movie_list.sample
       bot_message = sample_movie +" - "+ movie_hash[sample_movie][:star]
+      img_url = movie_hash[sample_movie][:url]
       # bot_message = sample_movie +" - "+ movie_hash[sample_movie]
-    elsif user_message =='모모'
-      url = "http://www.arthousemomo.co.kr"
-      movie_html = RestClient.get(url)
-      doc = Nokogiri::HTML(movie_html)
-      # movie_list=Array.new
-      time_list=Array.new
-      movie_hash=Hash.new
-      doc.css('div.time-box ul').each do |movie|
-        time_list << movie.css('li.first')
-        # movie_list << movie.css('li a').text
-        movie_hash[time_list]
-      end
-      for i in time_list.length
-        bot_message = time_list[i] + movie_list[i]
-      end
+    # elsif user_message =='모모'
+    #   url = "http://www.arthousemomo.co.kr"
+    #   movie_html = RestClient.get(url)
+    #   doc = Nokogiri::HTML(movie_html)
+    #   # movie_list=Array.new
+    #   time_list=Array.new
+    #   movie_hash=Hash.new
+    #   doc.css('div.time-box ul').each do |movie|
+    #     time_list << movie.css('li.first')
+    #     # movie_list << movie.css('li a').text
+    #     movie_hash[time_list]
+    #   end
+    #   for i in time_list.length
+    #     bot_message = time_list[i] + movie_list[i]
+    #   end
     else
         bot_message="Nop. '메뉴' or '로또' or 'ㄱㅇㅇ'"
     end
@@ -77,7 +80,7 @@ class KakaoController < ApplicationController
     return_message_with_img = {
       :message => {:text => bot_message,
                     :photo => {
-                      :url => cat_url,
+                      :url => img_url,
                       :width =>640,
                       :height => 480
                       }
